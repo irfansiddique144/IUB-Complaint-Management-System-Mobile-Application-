@@ -23,6 +23,9 @@ class User(AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="user", db_index=True)
     email_verified = models.BooleanField(default=False)
     email_verified_at = models.DateTimeField(blank=True, null=True)
+    department=models.ForeignKey("Department", on_delete=models.SET_NULL, blank=True, null=True, related_name="users")
+    campus=models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"

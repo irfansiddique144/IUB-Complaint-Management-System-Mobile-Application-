@@ -1,4 +1,4 @@
-from .views import ComplaintCategoryDetailView, ComplaintCategoryView, ComplaintView, DepartmentDetailView, DepartmentView,ComplaintDetailView, ComplaintResponseView, ComplaintResponseDetailView, ComplaintStatusHistoryView, ComplaintStatusHistoryDetailView, UserView, UserDetailView
+from .views import ComplaintCategoryDetailView, ComplaintCategoryView, ComplaintView, CustomTokenObtainPairView, DepartmentDetailView, DepartmentView,ComplaintDetailView, ComplaintResponseView, ComplaintResponseDetailView, ComplaintStatusHistoryView, ComplaintStatusHistoryDetailView, UserView, UserDetailView
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -27,4 +27,6 @@ urlpatterns = [
     
     # Use this to get a new access token when the old one expires
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # Custom Token endpoint
+    path('login/', CustomTokenObtainPairView.as_view(), name='custom_login'),
 ]

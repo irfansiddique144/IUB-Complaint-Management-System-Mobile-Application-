@@ -5,7 +5,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from .models import Complaint, Complaint_category, Department, ComplaintResponse, ComplaintStatusHistory
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
 User = get_user_model()
 
 # Helper function to check if user is admin/staff
@@ -337,7 +343,10 @@ class UserDetailView(APIView):
             'username': user.username, 
             'email': user.email, 
             'role': user.role, 
-            'email_verified': user.email_verified
+            'email_verified': user.email_verified,
+            'department': user.department.name if user.department else None,
+            'campus': user.campus,
+            'phone_number': user.phone_number,
         }, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
@@ -348,7 +357,10 @@ class UserDetailView(APIView):
         user.username = request.data.get('username', user.username)
         user.email = request.data.get('email', user.email)
         user.email_verified = request.data.get('email_verified', user.email_verified)
-        
+        user.department = request.data.get('department', user.department)
+        user.campus = request.data.get('campus', user.campus)
+        user.phone_number = request.data.get('phone_number', user.phone_number)
+
         # Only admins can change a user's role
         if is_admin(request.user) and 'role' in request.data:
             user.role = request.data.get('role', user.role)
