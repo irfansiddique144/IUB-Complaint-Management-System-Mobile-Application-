@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',  # Add this line for CORS headers
     'rest_framework_simplejwt',
 ]
 
 AUTH_USER_MODEL = 'core.User'  # Use the custom User model
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Add this line for CORS headers
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
