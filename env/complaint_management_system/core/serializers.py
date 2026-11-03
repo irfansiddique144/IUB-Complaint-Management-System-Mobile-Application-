@@ -24,10 +24,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             } if user.department else None,
             
             # Assuming campus is also a ForeignKey, apply the same fix
-            'campus': {
-                'id': user.campus.id,
-                'name': user.campus.name # Change '.name' to your actual field name if different
-            } if user.campus else None,
+            'campus': user.campus,  # Change '.name' to your actual field name if different
             
             'phone_number': user.phone_number,
         }
