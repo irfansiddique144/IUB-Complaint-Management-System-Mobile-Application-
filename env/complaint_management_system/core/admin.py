@@ -5,10 +5,10 @@ from .models import User, Complaint_category, Department, Complaint, ComplaintRe
 # 1. Custom User Admin
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ("username", "email", "role", "email_verified", "is_staff", "is_active")
+    list_display = ("username", "email", "role", "email_verified", "is_staff", "is_active", "department", "campus")
     list_filter = ("role", "email_verified", "is_staff", "is_active")
     fieldsets = BaseUserAdmin.fieldsets + ((None, {"fields": ("role", "email_verified", "email_verified_at")}),)
-    add_fieldsets = BaseUserAdmin.add_fieldsets + ((None, {"fields": ("role", "email_verified", "email_verified_at")}),)
+    add_fieldsets = BaseUserAdmin.add_fieldsets + ((None, {"fields": ("role", "email_verified", "email_verified_at",'department','campus')}),)
 
 # 2. Complaint Category Admin
 @admin.register(Complaint_category)
