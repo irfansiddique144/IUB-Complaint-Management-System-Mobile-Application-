@@ -1,6 +1,5 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
@@ -17,8 +16,19 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'last_name': user.last_name,
             'email': user.email,
             'email_verified': user.email_verified,
-            'department': user.department,
-            'campus': user.campus,
+            
+            # FIXED: Extracting serializable fields instead of the raw model instance
+            'department': {
+                'id': user.department.id,
+                'name': user.department.name # Change '.name' to your actual field name if different
+            } if user.department else None,
+            
+            # Assuming campus is also a ForeignKey, apply the same fix
+            'campus': {
+                'id': user.campus.id,
+                'name': user.campus.name # Change '.name' to your actual field name if different
+            } if user.campus else None,
+            
             'phone_number': user.phone_number,
         }
 
