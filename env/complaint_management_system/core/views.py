@@ -284,6 +284,16 @@ class ComplaintDetailView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, pk):
+        complaint = self.get_object(pk, request.user)
+        if not complaint:
+            return Response({'error': 'Complaint not found or access denied.'}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            complaint.delete()
+            return Response({'message': 'Complaint deleted successfully.'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 # ==========================================
 # 4. USER VIEWS
